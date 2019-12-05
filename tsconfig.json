@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es2017",
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "noImplicitReturns": true,
+    "noImplicitAny": false,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "outDir": "./dist"
+  },
+  "plugins": [
+    {
+      "name": "typescript-tslint-plugin"
+    }
+  ],
+  "include": ["src/**/*.ts", "src/**/*.d.tsx"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "out"
+  ],
+  "compileOnSave": false
+}

@@ -1,0 +1,64 @@
+.form-inline {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: none;
+    height: 32px;
+    line-height: 32px;
+    margin-bottom: 8px;
+    align-items: center;
+
+    label {
+        margin-right: 16px;
+    }
+
+    .form-input {
+        height: 30px;
+        padding: 0 8px;
+        font-size: 14px;
+    }
+
+    .form-inline-note {
+        height: 32px;
+        line-height: 32px;
+        color: $grey-dark;
+    }
+
+    &.fix-width {
+
+        padding: 0 64px;
+
+        label {
+            width: 200px;
+            text-align: right;
+        }
+
+        .form-input {
+            flex-grow: 1;
+            margin-top: 1px;
+        }
+    }
+
+    &.no-margin-bottom {
+        margin-bottom: 0;
+    }
+}
+
+.form-input {
+    border-radius: 4px;
+    border: none;
+}
+
+.input-group {
+    .form-input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        vertical-align: middle;
+    }
+
+    .input-group-button {
+        margin-left: -1px;
+        border-radius: 0 4px 4px 0;
+        height: 30px;
+        vertical-align: middle;
+    }
+}

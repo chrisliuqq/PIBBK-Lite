@@ -1,0 +1,31 @@
+.scrollbar {
+
+    &::-webkit-scrollbar {
+        background-color: $grey;
+        width: $scrollbar-width;
+        display: none;
+    }
+
+    &.always::-webkit-scrollbar {
+        display: block;
+    }
+
+    &:hover::-webkit-scrollbar {
+        display: block;
+    }
+
+    &::-webkit-scrollbar-track
+    {
+        width: $scrollbar-width;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: $grey;
+    }
+
+    &::-webkit-scrollbar-thumb, &::-webkit-scrollbar-thumb:window-inactive
+    {
+        width: $scrollbar-width;
+        border-radius: 5px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: $steel;
+    }
+}

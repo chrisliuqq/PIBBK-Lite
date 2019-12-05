@@ -1,0 +1,223 @@
+@import 'helper/_flex';
+@import 'helper/_grid';
+@import 'helper/_text';
+@import '_variables';
+@import 'component/_tooltipped';
+@import 'component/_toast';
+@import 'component/_modal';
+@import 'component/_button';
+@import 'component/_form';
+@import 'component/_scrollbar';
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-size: 11px;
+    user-select: none;
+    background-color: $grey-dark;
+    font-size: 16px;
+    color: $white;
+}
+
+#titlebar {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 0 70px;
+    // overflow: hidden;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    zoom: 1;
+    line-height: $menubar-height;
+    height: $menubar-height;
+    display: flex;
+    background-color: $black;
+
+    .windows-title {
+        flex: 0 1 auto;
+        font-size: 12px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin-left: auto;
+        margin-right: auto;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 0px);
+        color: #fff;
+    }
+
+    .app-region {
+        position: absolute;
+        -webkit-user-select: none;
+        -webkit-app-region: drag;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+#main {
+    padding: 0 16px;
+    height: 100%;
+}
+
+#urlbar {
+    height: $urlbar-height;
+    border-bottom: 1px solid $grey;
+}
+
+#toolbar {
+    height: $urlbar-height;
+    border-bottom: 1px solid $grey;
+}
+
+#working-area {
+    height: calc(100vh - #{$urlbar-height} - #{$urlbar-height} - 16px - #{$translator-height});
+    overflow-y: auto;
+}
+
+.working-box {
+    width: 49%;
+    font-size: 14px;
+    line-height: 1.15;
+    background-color: $grey-dark;
+    outline: none;
+    color: $white;
+
+    &.html {
+        margin-bottom: 50px;
+        user-select: text;
+        margin-top: 3px;
+
+        p {
+            min-height: 16px;
+            margin: 0;
+            padding-left: 8px;
+        }
+
+        .active {
+            background-color: $steel-highlight;
+        }
+
+        .word-cn {
+            color: #cc3e44;
+        }
+
+        .quotes {
+            color: $blue;
+        }
+
+        .double-quotes {
+            color: $green;
+        }
+
+        .parentheses {
+            color: $orange;
+        }
+
+        .replaced {
+            color: $pink;
+        }
+
+        .double-angle-quotation-mark {
+            color: #436b24;
+        }
+
+        .square-brackets {
+            color: #e37933;
+        }
+    }
+}
+
+#translator {
+    // padding: 0 16px;
+    height: $translator-height;
+    position: fixed;
+    bottom: 0;
+    left: 16px;
+    right: 16px;
+    z-index: $zindex-translator;
+    grid-template-rows: 40px 1fr;
+    // background: #fff;
+    .webview {
+        height: 100%;
+    }
+}
+
+#translator-bar {
+    width: 100%;
+}
+
+#modal-syosetu-r18-confirm {
+
+    .modal-body {
+        height: calc(100% - 100px);
+    }
+
+    webview {
+        height: 100%;
+    }
+}
+
+.replace-list {
+
+    list-style-type: none;
+
+    li {
+        padding: 4px 8px 8px 4px;
+        margin-bottom: 0;
+        max-width: 520px;
+    }
+
+    .highlihgt {
+        // background-color: #f55385;
+    }
+
+    .input-text {
+        padding: 0 4px;
+    }
+
+    .location {
+        color: #f55385;
+    }
+
+    .other {
+        color: #e37933;
+    }
+    .replace-note {
+        flex-basis: 100%;
+        margin-top: 4px;
+        margin-bottom: 0;
+        font-size: 13px;
+        color: #fff;
+    }
+}
+
+.replace-edit-box {
+    width: 500px;
+    margin: 0 auto;
+}
+
+/* mac fix */
+
+.mac {
+    #main {
+        height: calc(100vh - #{$menubar-height});
+    }
+
+    #working-area {
+        height: calc(100vh - #{$menubar-height} - #{$urlbar-height} - #{$urlbar-height} - 16px - #{$translator-height});
+    }
+
+    .modal-mask {
+        top: $menubar-height;
+    }
+}
+

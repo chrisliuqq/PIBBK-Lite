@@ -1,0 +1,17 @@
+.button {
+    display: inline-block;
+    padding: 4px 20px;
+    margin: 0 4px;
+    height: 30px;
+    line-height: 22px;
+    border-radius: 10px;
+    font-size: 1em;
+    color: $white;
+    background-color: $blue-highlight;
+    border: none;
+    outline: none;
+}
+
+.pointer {
+    cursor: pointer;
+}

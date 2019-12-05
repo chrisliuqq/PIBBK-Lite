@@ -1,0 +1,62 @@
+{
+  "name": "PIBBK-Lite",
+  "version": "1.0.0",
+  "description": "Web Novel Translator",
+  "author": "chrisliuqq@gmail.com",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dev": "node_modules/webpack/bin/webpack.js --progress --hide-modules --mode development --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --mode development --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "test": "node_modules/.bin/mocha --require ts-node/register test/*.ts",
+    "pack": "electron-builder --dir",
+    "pack:all": "electron-builder -mwl --dir",
+    "pack:win": "electron-builder --win --dir",
+    "pack:mac": "electron-builder --mac --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win"
+  },
+  "main": "build/main.js",
+  "devDependencies": {
+    "electron": "^7.1.2",
+    "electron-builder": "^21.2.0",
+    "laravel-mix": "^5.0.0",
+    "resolve-url-loader": "^3.1.0",
+    "sass": "^1.23.6",
+    "sass-loader": "^8.0.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.2",
+    "vue-devtools": "^5.1.3",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "dependencies": {
+    "@types/cheerio": "^0.22.14",
+    "cheerio": "^1.0.0-rc.3",
+    "cross-env": "^6.0.3",
+    "electron-window-state": "^5.0.3",
+    "vue": "^2.6.10"
+  },
+  "build": {
+    "appId": "chrisliu.net.pibbk.lite",
+    "files": [
+      "./build/**/*"
+    ],
+    "fileAssociations": [
+      {
+        "ext": "pibbk",
+        "name": "PIBBK File",
+        "role": "Editor",
+        "icon": "build/logo/logo.icns"
+      }
+    ],
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "icon": "build/logo/logo.icns",
+      "target": ["dmg","zip"]
+    },
+    "win": {
+      "icon": "build/logo/logo-256.png",
+      "target": ["nsis","zip"]
+    }
+  }
+}

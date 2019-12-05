@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>PIBBK Lite - WebNovel Manager</title>
+    <link type="text/css" href="./assets/styles/app.css" media="all" rel="stylesheet">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="titlebar">
+            <div class="windows-title">{{ windowTitle }}</div>
+            <div class="app-region tooltipped tooltipped-s" :aria-label="currentFile"></div>
+        </div>
+
+        <section id="main">
+            <div id="urlbar" class="form-inline no-margin-bottom justify-content-center align-items-center">
+                <label>網址：</label>
+                <div class="input-group flex flex-grow">
+                    <input type="text" id="url" class="form-input flex-grow" value="" placeholder="僅接受小說家與 pixiv 的網址" v-model="info.sourceUrl" />
+                    <button type="button" class="input-group-button tooltipped tooltipped-sw tooltipped-multiline" aria-label="網址格式： http://ncode.syosetu.com/n4449cj/1/ 與 https://www.pixiv.net/novel/show.php?id=9090631">
+                        <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg>
+                    </button>
+                </div>
+                <button type="button" class="button" @click="eventFetchButtonClick">擷取原文</button>
+            </div>
+
+            <div id="toolbar" class="form-inline justify-content-center align-items-center">
+                <p class="input-text flex">
+                    <button type="button" @click="eventOpenInfoButtonClick" class="button">小說資訊</button>
+                    <button type="button" @click="eventOpenReplaceButtonClick" class="button">名詞取代</button>
+                    <button type="button" @click="eventSyosetuR18ButtonClick" class="button tooltipped tooltipped-s tooltipped-multiline" aria-label="第一次要擷取小說家 r18 網站的時候需要點擊驗證年齡的按鈕">取得小說家 R18 cookie</button>
+                    <span>常用符號：</span>
+                    <button class="button btn-insert">◆</button>
+                    <button class="button btn-insert">■</button>
+                    <button class="button btn-insert">—</button>
+                    <button class="button btn-insert">・</button>
+                </p>
+                <p class="input-text tooltipped tooltipped-s tooltipped-multiline" aria-label="總日文字數-已翻譯中文字數/預計總翻譯字數，已翻譯行數/總日文行數">字數：{{ translatedWordCount }}，行數：{{ translatedLineCount }}</p>
+            </div>
+
+            <div id="working-area" class="flex scrollbar always">
+                <div id="source" class="working-box html flex-grow" v-html="workingSource" v-on:dblclick="eventTranslateThisLine">
+
+                </div>
+                <textarea id="translation" class="working-box flex-grow" v-model="working.translation" @click="highlightCurrentLine" @keyup="highlightCurrentLine"></textarea>
+            </div>
+        </section>
+
+        <section id="translator" class="grid">
+            <div id="translator-bar" class="form-inline no-margin-bottom justify-content-center align-items-center">
+                <label>翻譯文字：</label>
+                <input type="text" class="form-input flex-grow" v-model="translateString" />
+                <button type="button" @click="eventTranslateButtonClick" class="button">翻譯</button>
+            </div>
+            <div class="area-webviews flex">
+                <webview class="webview webview-google col" src="https://translate.google.com.tw/#ja/zh-TW/" webpreferences="allowRunningInsecureContent, webSecurity=0" disablewebsecurity></webview>
+                <webview class="webview webview-baidu col" src="https://fanyi.baidu.com/#jp/zh/" webpreferences="allowRunningInsecureContent, webSecurity=0" disablewebsecurity></webview>
+                <webview class="webview webview-caiyun col" src="https://fanyi.caiyunapp.com/#/" webpreferences="allowRunningInsecureContent, webSecurity=0" disablewebsecurity></webview>
+                <webview class="webview webview-youdao col" src="http://fanyi.youdao.com/" webpreferences="allowRunningInsecureContent, webSecurity=0" disablewebsecurity></webview>
+                <!-- <webview class="webview webview-fts col" src="https://www.jpmarumaru.com/tw/toolJPAnalysis.asp" webpreferences="allowRunningInsecureContent, webSecurity=0" disablewebsecurity pnodeintegration></webview> -->
+            </div>
+        </section>
+
+        <modal-info v-bind:info="info" v-on:close="modalClose($event)"></modal-info>
+        <modal-syosetu18 v-on:close="modalClose($event)"></modal-syosetu18>
+        <modal-replace v-bind:replaces="replaces" v-on:close="modalClose($event)" v-on:edit="replaceEdit($event)"></modal-replace>
+        <modal-replace-edit v-if="currentReplace" v-bind:replace="currentReplace" v-on:close="modalClose($event)"></modal-replace>
+
+    </div>
+    <script src="./app.js"></script>
+</body>
+</html>
