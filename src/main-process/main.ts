@@ -1,4 +1,4 @@
-import { app, Menu, BrowserWindow, dialog, session, ipcMain } from 'electron'
+import { app, Menu, BrowserWindow, dialog, ipcMain } from 'electron'
 import * as windowStateKeeper from 'electron-window-state'
 import { isLinux, isMacintosh, isWindows } from '../common/platform';
 import * as url from 'url';
