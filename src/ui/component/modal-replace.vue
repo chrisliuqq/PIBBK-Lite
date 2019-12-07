@@ -25,6 +25,7 @@
                 </ul>
             </div>
             <div class="modal-footer">
+                <button type="button" class="button" @click="cleanDuplicated">過濾重複名詞</button>
                 <button type="button" class="button" @click="$emit('close', 'modal-replace')">關閉</button>
             </div>
         </div>
@@ -45,6 +46,18 @@ export default {
                 type: 'other',
                 note: ''
             });
+        },
+        cleanDuplicated() {
+            let _this = this as any;
+            let list = [];
+            let newReplaces = [];
+            _this.replaces.forEach((r) => {
+                if (!list.includes(r.pattern)) {
+                    list.push(r.pattern);
+                    newReplaces.push(r);
+                }
+            });
+            _this.replaces = newReplaces;
         },
         deleteReplace(index) {
             (this as any).replaces.splice(index, 1);
