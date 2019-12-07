@@ -335,10 +335,10 @@ new Vue({
             // }
         },
         eventWorkingAreaScroll(event) {
-            // console.log(event);
             let target = event.target as HTMLElement;
             if (target.scrollTop === 0) {
-                target.style.marginTop = '0';
+                let source = document.querySelector('#source') as HTMLInputElement;
+                source.style.marginTop = '0';
             }
         },
         /* ------------------

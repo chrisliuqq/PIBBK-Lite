@@ -38,7 +38,7 @@
                 <p class="input-text tooltipped tooltipped-s tooltipped-multiline" aria-label="總日文字數-已翻譯中文字數/預計總翻譯字數，已翻譯行數/總日文行數">字數：{{ translatedWordCount }}，行數：{{ translatedLineCount }}</p>
             </div>
 
-            <div id="working-area" class="flex scrollbar always">
+            <div id="working-area" class="flex scrollbar always" @scroll="eventWorkingAreaScroll">
                 <div id="source" class="working-box html flex-grow" v-html="workingSource" v-on:dblclick="eventTranslateThisLine"></div>
 
                 <textarea id="translation" class="working-box flex-grow" v-model="working.translation" @click="highlightCurrentLine($event)" @keyup="highlightCurrentLine($event)"></textarea>
