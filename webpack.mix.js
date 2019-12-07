@@ -13,7 +13,6 @@ mix
 mix
     .sass('assets/styles/app.scss', 'build/assets/styles/')
     .ts('src/ui/app.ts', 'build/')
-    .copy('assets/lib/fontawesome-all.min.js', 'build/assets/lib/')
     .copy('assets/static/index.html', 'build/')
     .copyDirectory('assets/translations', 'build/assets/translations')
     .copyDirectory('assets/logo', 'build/logo')
