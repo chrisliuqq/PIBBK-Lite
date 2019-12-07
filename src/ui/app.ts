@@ -7,6 +7,7 @@ import * as zlib from 'zlib';
 import * as fs from 'fs';
 import * as path from 'path';
 const { Menu, MenuItem, dialog } = remote;
+const getCaretCoordinates = require('textarea-caret');
 
 import modalSyosetu18 from './component/modal-syosetu18.vue';
 import modalReplace from './component/modal-replace.vue';
@@ -225,7 +226,7 @@ new Vue({
             const menu = new Menu();
             menu.append(
                 new MenuItem({
-                    label: '新增到翻譯中',
+                    label: '新增到名詞取代',
                     click() {
                         _this.addSelectionToReplace(window.getSelection().toString());
                     }
@@ -236,7 +237,6 @@ new Vue({
                 'contextmenu',
                 e => {
                     e.preventDefault();
-                    console.log(e);
                     var element = e.srcElement as HTMLElement;
                     if (element.nodeName !== 'TEXTAREA' && element.nodeName !== 'P' && element.nodeName !== 'SPAN') {
                         return;
@@ -298,7 +298,6 @@ new Vue({
                 this.translateString = event.target.innerText;
                 (this as any).eventTranslateThis(this.translateString);
             }
-
         },
         eventOpenReplaceButtonClick() {
             document.getElementById('modal-replace').style.display = 'block';
@@ -334,6 +333,13 @@ new Vue({
             // if (webview) {
             //     webview.loadURL('https://www.jpmarumaru.com/tw/toolJPAnalysis.asp?t=' + string);
             // }
+        },
+        eventWorkingAreaScroll(event) {
+            // console.log(event);
+            let target = event.target as HTMLElement;
+            if (target.scrollTop === 0) {
+                target.style.marginTop = '0';
+            }
         },
         /* ------------------
             file handler
@@ -397,7 +403,14 @@ new Vue({
         replaceEdit(replace) {
             this.currentReplace = replace;
         },
-        highlightCurrentLine() {
+        highlightCurrentLine(event) {
+
+            if (event instanceof KeyboardEvent) {
+                if (!(['ArrowDown', 'ArrowUp', 'ArrowLeft', 'ArrowRight', 'Enter', 'Backspace', 'Delete'].includes(event.key))) {
+                    return;
+                }
+            }
+
             try {
                 let translation = document.getElementById('translation') as HTMLInputElement;
                 let selectionStart = translation.selectionStart;
@@ -407,9 +420,22 @@ new Vue({
                 [].forEach.call(elements, function(el) {
                     (el as HTMLElement).classList.remove('active');
                 });
-                document.querySelectorAll('#source p')[lineNumber - 1].classList.add('active');
+                let paragraph = document.querySelectorAll('#source p')[lineNumber - 1]
+                paragraph.classList.add('active');
+                (this as any).calculateSourceMargin(event, translation, paragraph);
             } catch (e) {
                 console.log([e]);
+            }
+        },
+        calculateSourceMargin(event, translation, paragraph) {
+            let workingHeight = document.querySelector('#working-area').clientHeight ?? 0;
+            let source = document.querySelector('#source') as HTMLInputElement;
+            let caret = getCaretCoordinates(translation, translation.selectionStart);
+            if (paragraph.offsetTop < workingHeight) {
+                source.style.marginTop = '0';
+            }
+            else {
+                source.style.marginTop = (caret.top - paragraph.offsetTop) + 'px';
             }
         },
         _webviewTranslationInjectJs(webview: WebviewTag, element: string, string: string) {

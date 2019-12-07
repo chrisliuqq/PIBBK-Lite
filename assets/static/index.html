@@ -39,10 +39,9 @@
             </div>
 
             <div id="working-area" class="flex scrollbar always">
-                <div id="source" class="working-box html flex-grow" v-html="workingSource" v-on:dblclick="eventTranslateThisLine">
+                <div id="source" class="working-box html flex-grow" v-html="workingSource" v-on:dblclick="eventTranslateThisLine"></div>
 
-                </div>
-                <textarea id="translation" class="working-box flex-grow" v-model="working.translation" @click="highlightCurrentLine" @keyup="highlightCurrentLine"></textarea>
+                <textarea id="translation" class="working-box flex-grow" v-model="working.translation" @click="highlightCurrentLine($event)" @keyup="highlightCurrentLine($event)"></textarea>
             </div>
         </section>
 

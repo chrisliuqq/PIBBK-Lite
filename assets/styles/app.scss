@@ -85,6 +85,7 @@ body {
 
 .working-box {
     width: 49%;
+    position: relative;
     font-size: 14px;
     line-height: 1.15;
     background-color: $grey-dark;
@@ -94,7 +95,9 @@ body {
     &.html {
         margin-bottom: 50px;
         user-select: text;
-        margin-top: 3px;
+        padding-top: 3px;
+        margin-top: 0;
+        transition: .5s all;
 
         p {
             min-height: 16px;

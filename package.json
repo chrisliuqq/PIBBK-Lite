@@ -1,6 +1,6 @@
 {
   "name": "PIBBK-Lite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Web LightNovel Translator",
   "author": "chrisliuqq@gmail.com",
   "license": "MIT",
@@ -34,6 +34,7 @@
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^6.0.3",
     "electron-window-state": "^5.0.3",
+    "textarea-caret": "^3.1.0",
     "vue": "^2.6.10"
   },
   "build": {
@@ -52,11 +53,17 @@
     "mac": {
       "category": "public.app-category.developer-tools",
       "icon": "build/logo/logo.icns",
-      "target": ["dmg","zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "win": {
       "icon": "build/logo/logo-256.png",
-      "target": ["nsis","zip"]
+      "target": [
+        "nsis",
+        "zip"
+      ]
     }
   }
 }
