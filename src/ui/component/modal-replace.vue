@@ -19,7 +19,6 @@
                             </p>
                         </div>
                         <p class="replace-note">{{ replace.note }}</p>
-                        <!-- <p class="replace-note">{{ replace.note }}</p> -->
                     </li>
                     <li><button type="button" class="button" @click="addReplace">新增</button></li>
                 </ul>
