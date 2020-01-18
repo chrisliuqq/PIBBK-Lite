@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "electron .",
+    "pkg:install": "npx yarn-tool install && yarn run pkg:lockfile",
     "pkg:ncu": "yarn run yarn-tool ncu -u",
     "pkg:lockfile": "yarn run yarn-tool lockfile --npm --overwrite",
     "dev": "yarn run build && yarn run start",
