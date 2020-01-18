@@ -1,5 +1,7 @@
 let mix = require('laravel-mix');
 
+console.log(__filename);
+
 mix
     .ts('src/main-process/main.ts', 'build/')
     .webpackConfig({
