@@ -1,20 +1,23 @@
 {
   "name": "PIBBK-Lite",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Web LightNovel Translator",
   "author": "chrisliuqq@gmail.com",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
+    "//": "mkdir -p /tmp/wine-stage/wine/usr; cp -R ~/Downloads/wine-2.0.1-mac-10.12/lib /tmp/wine-stage/wine/usr/",
     "dev": "node_modules/webpack/bin/webpack.js --progress --hide-modules --mode development --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --mode development --config=node_modules/laravel-mix/setup/webpack.config.js",
     "test": "node_modules/.bin/mocha --require ts-node/register test/*.ts",
     "pack": "electron-builder --dir",
     "pack:all": "electron-builder -mwl --dir",
     "pack:win": "electron-builder --win --dir",
+    "pack:win32": "electron-builder --ia32 --win --dir",
     "pack:mac": "electron-builder --mac --dir",
     "dist": "electron-builder",
-    "dist:win": "electron-builder --win"
+    "dist:win": "electron-builder --win",
+    "dist:win32": "electron-builder --win --ia32"
   },
   "main": "build/main.js",
   "devDependencies": {

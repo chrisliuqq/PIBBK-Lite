@@ -217,6 +217,12 @@ new Vue({
                                 shell.openExternal(url);
                             });
                         }
+                        // if (webview.classList.contains('webview-google')) {
+                        //     (<WebviewTag>webview).openDevTools();
+                        // }
+                        // if (webview.classList.contains('webview-baidu')) {
+                        //     (<WebviewTag>webview).openDevTools();
+                        // }
                     });
                 });
             });
@@ -327,6 +333,11 @@ new Vue({
             webview = document.querySelector('.webview-youdao') as WebviewTag;
             if (webview) {
                 _this._webviewTranslationInjectJs(webview, '#inputOriginal', string);
+            }
+
+            webview = document.querySelector('.webview-deepl') as WebviewTag;
+            if (webview) {
+                _this._webviewTranslationInjectJs(webview, '.lmt__source_textarea', string);
             }
 
             // webview = document.querySelector('.webview-fts') as WebviewTag;
@@ -506,13 +517,15 @@ let injectCSS = (webview:Element) => {
 #gb, #gt-ft-res, .gb_Hg, #gba, #gt-appbar, .gb_T, #gt-src-wrap, .gb_Ig.gb_Jf, .ls-wrap, .source-wrap, .gp-footer, .feedback-link, .tlid-result-view, #gt-text-c #gt-langs { display: none!important; }
 #gt-res-c, .gt-cc-r { float: left!important; }
 #gt-res-c, #gt-src-c { width: 100%!important; }
-.frame { height: 240px!important; overflow-y: hidden!important;}
+.frame { height: 1000px!important; overflow-y: hidden!important;}
 
 .header, .footer, .trans-left, .trans-operation-wrapper, .divide-wrap { display: none!important; }
 .container { width: 100%!important; }
 .trans-right { float: left!important; width: 100%!important;}
 .container .inner { width: auto!important; margin: 0!important;}
+.trans-other-wrap { display: none!important; }
 
+.choose-content, .text-source-box { display: none!important; }
 header, .footer-distributed, .hamburger, .alert { display: none!important; }
 
 .lang-new, .textpanel-source, .banner, .fanyi_nav_mobile { display: none!important; }
@@ -523,6 +536,11 @@ html, body, .fanyi, .fanyi-page { min-width: 100%!important; }
 .fanyi__input { margin: 0!important; }
 .input__target { width: 100%!important;}
 .fanyi__input__bg { padding: 0; margin: 0; }
+
+.dl_header, #lmt_quotes_article, .dl_footer, #dl_cookie_footer, .lmt__side_container--source, .lmt__textarea_separator, #lmt__dict { display: none!important; }
+.lmt__side_container--target { width: 100%!important; }
+#dl_translator { padding-top: 0!important; }
+.lmt__target_textarea { height: 1000px!important; }
 `);
 }
 
