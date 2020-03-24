@@ -21,7 +21,7 @@
     "pack:win:64": "electron-builder --win --dir",
     "pack:win:32": "electron-builder --win --ia32 --dir",
     "pack:mac": "yarn run build && electron-builder --mac --dir",
-    "dist": "yarn run build && electron-builder",
+    "dist": "yarn run build && electron-builder -wml && electron-builder -w --ia32",
     "dist:win": "yarn run build && yarn run dist:win:64 && yarn run dist:win:32",
     "dist:win:64": "electron-builder --win",
     "dist:win:32": "electron-builder --win --ia32"
