@@ -46,9 +46,12 @@
   },
   "dependencies": {
     "@types/cheerio": "^0.22.14",
+    "acorn": "^6.4.1",
     "cheerio": "^1.0.0-rc.3",
     "cross-env": "^6.0.3",
     "electron-window-state": "^5.0.3",
+    "kind-of": "^6.0.3",
+    "minimist": "^1.2.5",
     "serialize-javascript": "2.1.1",
     "textarea-caret": "^3.1.0",
     "vue": "^2.6.10"
