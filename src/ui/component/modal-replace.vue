@@ -56,6 +56,20 @@ export default {
                     newReplaces.push(r);
                 }
             });
+
+            newReplaces.sort(function(a, b) {
+                // return b.pattern.length - a.pattern.length;
+                if (a.pattern < b.pattern) {
+                    return 1;
+                }
+                if (a.pattern > b.pattern) {
+                    return -1;
+                }
+
+                // names must be equal
+                return 0;
+            });
+
             _this.replaces = newReplaces;
         },
         deleteReplace(index) {
