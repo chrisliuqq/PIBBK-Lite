@@ -4,7 +4,7 @@
             <div class="modal-title">名詞取代</div>
             <div class="modal-body">
                 <ul class="flex replace-list">
-                    <li v-for="(replace, index) in replaces">
+                    <li v-for="(replace, index) in value">
                         <div class="form-inline no-margin-bottom justify-content-center align-items-center">
                             <input type="text" class="form-input" v-model="replace.pattern" placeholder="要取代的日文" />
                             <p class="input-text">
@@ -25,7 +25,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="button" @click="cleanDuplicated">過濾重複名詞</button>
-                <button type="button" class="button" @click="$emit('close', 'modal-replace')">關閉</button>
+                <button type="button" class="button" @click="$emit('input', value);$emit('close', 'modal-replace')">關閉</button>
             </div>
         </div>
     </div>
@@ -33,13 +33,13 @@
 
 <script lang="ts">
 export default {
-    props: ['replaces'],
+    props: ['value'],
     data() {
         return {};
     },
     methods: {
         addReplace() {
-            (this as any).replaces.push({
+            (this as any).value.push({
                 pattern: '',
                 replace: '',
                 type: 'other',
@@ -50,7 +50,7 @@ export default {
             let _this = this as any;
             let list = [];
             let newReplaces = [];
-            _this.replaces.forEach((r) => {
+            _this.value.forEach((r) => {
                 if (!list.includes(r.pattern)) {
                     list.push(r.pattern);
                     newReplaces.push(r);
@@ -70,10 +70,10 @@ export default {
                 return 0;
             });
 
-            _this.replaces = newReplaces;
+            _this.value = newReplaces;
         },
         deleteReplace(index) {
-            (this as any).replaces.splice(index, 1);
+            (this as any).value.splice(index, 1);
         }
     },
     computed: {

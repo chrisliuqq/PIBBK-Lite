@@ -63,7 +63,7 @@
 
         <modal-info v-bind:info="info" v-on:close="modalClose($event)"></modal-info>
         <modal-syosetu18 v-on:close="modalClose($event)"></modal-syosetu18>
-        <modal-replace v-bind:replaces="replaces" v-on:close="modalClose($event)" v-on:edit="replaceEdit($event)"></modal-replace>
+        <modal-replace v-model="replaces" v-on:close="modalClose($event)" v-on:edit="replaceEdit($event)"></modal-replace>
         <modal-replace-edit v-if="currentReplace" v-bind:replace="currentReplace" v-on:close="modalClose($event)"></modal-replace>
 
     </div>
