@@ -42,6 +42,10 @@ new Vue({
         },
         currentReplace: null,
         replaces: [],
+        replaceSource: {
+            'type': 'local',
+            'path': ''
+        },
     },
     mounted() {
         let _this = (this as any);
@@ -118,6 +122,23 @@ new Vue({
                     Vue.set(_this, 'info', json.info);
                 }
 
+                let replaceSource = {};
+
+                if ('replaceSource' in json) {
+                    if ('type' in json.replaceSource && json.replaceSource.type === 'external') {
+                        _this._importPibbkFileReplace(json.replaceSource.path);
+                    }
+                    replaceSource = json.replaceSource;
+                }
+                else {
+                    replaceSource = {
+                        'type': 'local',
+                        'path': ''
+                    }
+                }
+
+                _this.replaceSource = replaceSource;
+
                 _this.currentFile = arg;
             })
 
@@ -164,18 +185,15 @@ new Vue({
             })
 
             ipcRenderer.on('file-import-replace', (event, arg) => {
-                let json = _this._readPibbkFile(arg);
-
-                if ('replaces' in json) {
-                    // _this.working.translation = json.translation;
-                    let replaces = _this.replaces.concat(json.replaces);
-                    Vue.set(_this, 'replaces', replaces);
-                    notification(`${arg} 檔案已匯入至名詞取代`);
-                }
+                _this._importPibbkFileReplace(arg);
             })
 
             ipcRenderer.on('file-export-translation', (event, arg) => {
                 _this._exportTranslationFile(arg);
+            })
+
+            ipcRenderer.on('file-export-replaces', (event, arg) => {
+                _this._exportReplacesFile(arg);
             })
 
             ipcRenderer.on('file-close-current', (event, arg) => {
@@ -352,6 +370,18 @@ new Vue({
                 source.style.marginTop = '0';
             }
         },
+        eventUpdateExternalReplaceSource() {
+            let _this = this as any;
+            remote.dialog.showOpenDialog({ properties: ['openFile'], filters: [ {name: 'PIBBK 檔案', extensions: ['pibbk'] } ] }).
+            then(result => {
+                if (result.filePaths.length === 1) {
+                    _this.replaceSource.path = result!.filePaths[0];
+                    _this._importPibbkFileReplace(_this.replaceSource.path);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        },
         /* ------------------
             file handler
         ------------------ */
@@ -361,6 +391,17 @@ new Vue({
             let json = JSON.parse(inflated);
 
             return json;
+        },
+        _importPibbkFileReplace(path: string) {
+            let _this = this as any;
+            let json = _this._readPibbkFile(path);
+
+            if ('replaces' in json) {
+                // _this.working.translation = json.translation;
+                let replaces = _this.replaces.concat(json.replaces);
+                Vue.set(_this, 'replaces', replaces);
+                notification(`${path} 檔案已匯入至名詞取代`);
+            }
         },
         _openAndReadTxt(path: string) {
             let data = fs.readFileSync(path, 'utf8');
@@ -376,9 +417,17 @@ new Vue({
                 type: 'lite',
                 source: _this.working.source,
                 translation: _this.working.translation,
-                replaces: _this.replaces,
+                replaceSource: _this.replaceSource,
                 info: _this.info,
+                replaces: [],
             };
+
+            if (_this.replaceSource.type === 'local') {
+                data.replaces = _this.replaces;
+            }
+            else if (_this.replaceSource.type === 'external') {
+                _this._saveExternalReplaceSource(_this.replaceSource.path);
+            }
 
             let json = JSON.stringify(data);
             let deflated = zlib.deflateSync(json);
@@ -388,12 +437,34 @@ new Vue({
                 notification(`檔案已儲存至 ${path}`);
             });
         },
+        _saveExternalReplaceSource(path: string) {
+            if (path.length <= 0) {
+                return;
+            }
+
+            let _this = this;
+            let data = {
+                type: 'replace',
+                replaces: _this.replaces
+            };
+
+            let json = JSON.stringify(data);
+            let deflated = zlib.deflateSync(json);
+
+            fs.writeFile(path, deflated, (err) => {
+                if (err) throw err;
+                // notification(`檔案已儲存至 ${path}`);
+            });
+        },
         _exportTranslationFile(path: string) {
             let translation = this.working.translation;
             fs.writeFile(path, translation, (err) => {
                 if (err) throw err;
                 notification(`檔案已匯出至 ${path}`);
             });
+        },
+        _exportReplacesFile(path: string) {
+            this._saveExternalReplaceSource(path);
         },
         modalClose(modal) {
             if (modal === 'modal-replace-edit') {

@@ -163,6 +163,7 @@ function buildMenu(window: BrowserWindow) {
             { label: i18n.__('匯入取代清單'), click() { showImportDialog('replace'); } },
             separator,
             { label: i18n.__('匯出純文字譯文'), click() { showExportTranslationDialog(); } },
+            { label: i18n.__('匯出取代清單'), click() { showExportReplacesDialog(); } },
             separator,
             { label: i18n.__('關閉檔案'), accelerator: isMacintosh ? 'Cmd+W' : 'Ctrl+W', click() { closeCurrentFile(); } },
         ]
@@ -262,6 +263,17 @@ function showExportTranslationDialog() {
     then(result => {
         if (result.filePath) {
             mainWindow!.webContents.send('file-export-translation', result!.filePath);
+        }
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+function showExportReplacesDialog() {
+    dialog.showSaveDialog({ filters: [ {name: '所有檔案', extensions: ['*'] } ] }).
+    then(result => {
+        if (result.filePath) {
+            mainWindow!.webContents.send('file-export-replaces', result!.filePath);
         }
     }).catch(err => {
         console.log(err);

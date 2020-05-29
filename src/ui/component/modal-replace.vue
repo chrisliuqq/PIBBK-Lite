@@ -3,6 +3,17 @@
         <div class="modal">
             <div class="modal-title">名詞取代</div>
             <div class="modal-body">
+                <div class="flex justify-content-center">
+                    <div class="form-inline flex-force-row justify-content-center">
+                        <label>儲存取代的位置：</label>
+                        <label><input type="radio" name="replaceSourceType" value="local" v-model="replace_source.type" />檔案內部</label>
+                        <label><input type="radio" name="replaceSourceType" value="external" v-model="replace_source.type" />外連檔案</label>
+                    </div>
+                    <div class="form-inline flex-force-row justify-content-center" v-show="replace_source.type === 'external'">
+                        <label><button type="button" class="button" @click="showSelectReplaceFileDialog">選取外部檔案</button></label>
+                        <p v-html="replace_source.path"></p>
+                    </div>
+                </div>
                 <ul class="flex replace-list">
                     <li v-for="(replace, index) in value">
                         <div class="form-inline no-margin-bottom justify-content-center align-items-center">
@@ -33,7 +44,7 @@
 
 <script lang="ts">
 export default {
-    props: ['value'],
+    props: ['value', 'replace_source'],
     data() {
         return {};
     },
@@ -74,6 +85,9 @@ export default {
         },
         deleteReplace(index) {
             (this as any).value.splice(index, 1);
+        },
+        showSelectReplaceFileDialog() {
+            (this as any).$emit('update');
         }
     },
     computed: {
