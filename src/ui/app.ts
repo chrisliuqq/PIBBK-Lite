@@ -3,6 +3,7 @@ import { isMacintosh } from '../common/platform';
 import Vue from 'vue'
 import { SyosetuParser } from '../parser/SyosetuParser';
 import { PixivParser } from '../parser/PixivParser';
+import { KakuyomuParser } from '../parser/KakuyomuParser';
 import * as zlib from 'zlib';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -295,6 +296,9 @@ new Vue({
             }
             else if (url.indexOf('pixiv') >= 0) {
                 parser = new PixivParser;
+            }
+            else if (url.indexOf('kakuyomu') >= 0) {
+                parser = new KakuyomuParser;
             }
 
             if (!parser) {
