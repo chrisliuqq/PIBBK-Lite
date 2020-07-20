@@ -14,8 +14,14 @@
                         <p v-html="replace_source.path"></p>
                     </div>
                 </div>
+                <div class="flex justify-content-center">
+                    <div class="form-inline flex-force-row justify-content-center">
+                        <label>關鍵字搜尋：</label>
+                        <label><input type="text" class="form-input" v-model="keyword" /></label>
+                    </div>
+                </div>
                 <ul class="flex replace-list">
-                    <li v-for="(replace, index) in value">
+                    <li v-for="(replace, index) in replaceList">
                         <div class="form-inline no-margin-bottom justify-content-center align-items-center">
                             <input type="text" class="form-input" v-model="replace.pattern" placeholder="要取代的日文" />
                             <p class="input-text">
@@ -36,7 +42,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="button" @click="cleanDuplicated">過濾重複名詞</button>
-                <button type="button" class="button" @click="$emit('input', value);$emit('close', 'modal-replace')">關閉</button>
+                <button type="button" class="button" @click="$emit('input', value);$emit('close', 'modal-replace');modalClose();">關閉</button>
             </div>
         </div>
     </div>
@@ -46,7 +52,7 @@
 export default {
     props: ['value', 'replace_source'],
     data() {
-        return {};
+        return {keyword: ''};
     },
     methods: {
         addReplace() {
@@ -69,15 +75,20 @@ export default {
             });
 
             newReplaces.sort(function(a, b) {
-                // return b.pattern.length - a.pattern.length;
+                let LenA = a.pattern.length;
+                let LenB = b.pattern.length;
+                if (LenA < LenB) {
+                    return 1;
+                }
+                if (LenA > LenB) {
+                    return -1;
+                }
                 if (a.pattern < b.pattern) {
                     return 1;
                 }
                 if (a.pattern > b.pattern) {
                     return -1;
                 }
-
-                // names must be equal
                 return 0;
             });
 
@@ -88,9 +99,25 @@ export default {
         },
         showSelectReplaceFileDialog() {
             (this as any).$emit('update');
+        },
+        modalClose() {
+            (this as any).keyword = '';
         }
     },
     computed: {
+        replaceList() {
+            let _this = this as any;
+
+            if (_this.keyword.length <= 0) {
+                return _this.value;
+            }
+
+            let keyword = _this.keyword;
+
+            return _this.value.filter(function(replace) {
+                return (replace.pattern.indexOf(keyword) > -1 || replace.replace.indexOf(keyword) > -1 || replace.note.indexOf(keyword) > -1);
+            });
+        }
     }
 }
 </script>
