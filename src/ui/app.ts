@@ -242,6 +242,9 @@ new Vue({
                         // if (webview.classList.contains('webview-baidu')) {
                         //     (<WebviewTag>webview).openDevTools();
                         // }
+                        // if (webview.classList.contains('webview-deepl')) {
+                        //     (<WebviewTag>webview).openDevTools();
+                        // }
                     });
                 });
             });
@@ -338,7 +341,8 @@ new Vue({
             string = encodeURIComponent(string);
             let webview = document.querySelector('.webview-google') as WebviewTag;
             if (webview) {
-                _this._webviewTranslationInjectJs(webview, '#source', string);
+                // _this._webviewTranslationInjectJs(webview, '#source', string);
+                (<WebviewTag>webview).loadURL('https://translate.google.com.tw/?sl=auto&tl=zh-TW&op=translate&text=' + string);
             }
 
             webview = document.querySelector('.webview-baidu') as WebviewTag;
@@ -589,7 +593,7 @@ new Vue({
 
 let injectCSS = (webview:Element) => {
     (<WebviewTag>webview).insertCSS(`
-#gb, #gt-ft-res, .gb_Hg, #gba, #gt-appbar, .gb_T, #gt-src-wrap, .gb_Ig.gb_Jf, .ls-wrap, .source-wrap, .gp-footer, .feedback-link, .tlid-result-view, #gt-text-c #gt-langs { display: none!important; }
+#gb, #gt-ft-res, .gb_Hg, #gba, #gt-appbar, .gb_T, #gt-src-wrap, .gb_Ig.gb_Jf, .ls-wrap, .source-wrap, .gp-footer, .feedback-link, .tlid-result-view, #gt-text-c #gt-langs, .VjFXz, .aCQag, .OPPzxe .rm1UF, .VlPnLc, .a88hkc { display: none!important; }
 #gt-res-c, .gt-cc-r { float: left!important; }
 #gt-res-c, #gt-src-c { width: 100%!important; }
 .frame { height: 1000px!important; overflow-y: hidden!important;}
@@ -606,16 +610,17 @@ header, .footer-distributed, .hamburger, .alert { display: none!important; }
 .lang-new, .textpanel-source, .banner, .fanyi_nav_mobile { display: none!important; }
 .lang-container { padding-top: 16px!important; }
 
-.fanyi__nav, .inside__products, .fanyi__footer, .input__original, .fanyi__operations, .download__area, .side__nav, .textpanel-tool { display: none!important; }
+.fanyi__nav, .inside__products, .fanyi__footer, .input__original, .fanyi__operations, .download__area, .side__nav, .textpanel-tool, .desktop-guide { display: none!important; }
 html, body, .fanyi, .fanyi-page { min-width: 100%!important; }
 .fanyi__input { margin: 0!important; }
 .input__target { width: 100%!important;}
 .fanyi__input__bg { padding: 0; margin: 0; }
 
-.dl_header, #lmt_quotes_article, .dl_footer, #dl_cookie_footer, .lmt__side_container--source, .lmt__textarea_separator, #lmt__dict { display: none!important; }
+.dl_header, #lmt_quotes_article, .dl_footer, #dl_cookie_footer, .lmt__side_container--source, .lmt__textarea_separator, #lmt__dict, .lmt__stickyMenubar_whiteBackground, #lmt_pro_ad_container, .lmt__docTrans-tab-container, .lmt__language_container { display: none!important; }
 .lmt__side_container--target { width: 100%!important; }
 #dl_translator { padding-top: 0!important; }
-.lmt__target_textarea { height: 1000px!important; }
+.lmt__target_textarea { height: auto !important; }
+.lmt__side_container--target { float: none !important; flex-basis: 100% !important; }
 `);
 }
 

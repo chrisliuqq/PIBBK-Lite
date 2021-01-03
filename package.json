@@ -1,6 +1,6 @@
 {
   "name": "PIBBK-Lite",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Web LightNovel Translator",
   "author": "chrisliuqq@gmail.com",
   "license": "MIT",
@@ -58,6 +58,7 @@
   },
   "build": {
     "appId": "chrisliu.net.pibbk.lite",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "files": [
       "./build/**/*"
     ],
