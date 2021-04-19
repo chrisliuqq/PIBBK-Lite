@@ -21,7 +21,7 @@ export class PixivParser extends Parser {
         let pattern = /<meta property="twitter:title" content="(.*?)">/gsm;
         let match = pattern.exec(html);
         let title;
-        console.log(['parseChapterTitle', match, html]);
+        // console.log(['parseChapterTitle', match, html]);
         if (match && 1 in match) {
             title = match[1];
         }
@@ -30,13 +30,18 @@ export class PixivParser extends Parser {
     }
 
     public parseContent(html: string):string {
-        let pattern = /novel_text_noscript">(.*?)<\/textarea>/gsm;
+        let pattern = /<meta name="preload-data" id="meta-preload-data" content='(.*?)'/gsm;
         let match = pattern.exec(html);
-        let content;
-        if (1 in match) {
-            content = match[1];
+        let json, chapterId;
+        if (match && 1 in match) {
+            json = JSON.parse(match[1]);
+        }
+        pattern = /<link rel="canonical" href="https:\/\/www.pixiv.net\/novel\/show.php\?id=(.*?)">/gsm;
+        match = pattern.exec(html);
+        if (match && 1 in match) {
+            chapterId = match[1];
         }
 
-        return content;
+        return json.novel[chapterId].content;
     }
 }
