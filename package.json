@@ -35,7 +35,7 @@
     "electron": "^7.2.4",
     "electron-builder": "^22.2.0",
     "laravel-mix": "^5.0.0",
-    "resolve-url-loader": "^3.1.0",
+    "resolve-url-loader": "^5.0.0",
     "sass": "^1.23.6",
     "sass-loader": "^8.0.0",
     "ts-loader": "^6.2.1",
